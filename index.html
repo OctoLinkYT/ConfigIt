@@ -1,0 +1,234 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <title>ConfigIt!</title>
+        <link rel="stylesheet" href="styles.css" />
+    </head>
+    <body>
+        <div class="app">
+            <header class="topbar">
+                <div class="progress" id="progress">0 / 118</div>
+                <div class="topbar-right">
+                    <button class="link-btn" id="openPdf" type="button">
+                        Open configurations
+                    </button>
+                    <div
+                        class="hearts"
+                        id="hearts"
+                        role="img"
+                        aria-label="Health: 5 of 5 hearts"
+                    ></div>
+                </div>
+            </header>
+
+            <section class="config-row" aria-label="Configuration being built">
+                <span class="tag" id="modeTag" data-mode="standard"
+                    >Standard</span
+                >
+                <div
+                    class="config-strip"
+                    id="configStrip"
+                    aria-live="polite"
+                    aria-atomic="true"
+                ></div>
+                <div class="timer">
+                    <div class="timer-track">
+                        <div class="timer-fill" id="timerFill"></div>
+                    </div>
+                    <span class="timer-num" id="timerNum">--</span>
+                </div>
+            </section>
+
+            <main class="board">
+                <section class="table-card">
+                    <ul
+                        class="ptable"
+                        id="ptable"
+                        aria-label="Periodic table of the elements"
+                    ></ul>
+                    <div class="legend">
+                        <span class="legend-item"
+                            ><i class="swatch" data-block="s"></i>s</span
+                        >
+                        <span class="legend-item"
+                            ><i class="swatch" data-block="p"></i>p</span
+                        >
+                        <span class="legend-item"
+                            ><i class="swatch" data-block="d"></i>d</span
+                        >
+                        <span class="legend-item"
+                            ><i class="swatch" data-block="f"></i>f</span
+                        >
+                        <span class="legend-item"
+                            ><i class="legend-tick">&#10003;</i>solved</span
+                        >
+                        <span class="legend-item"
+                            ><i class="legend-tick tried">&#10003;</i
+                            >studied</span
+                        >
+                    </div>
+                </section>
+
+                <aside class="element-card">
+                    <div class="portrait" id="portrait" data-block="s">
+                        <span class="p-num" id="pNum">1</span>
+                        <svg
+                            class="eyes"
+                            viewBox="0 0 140 80"
+                            aria-hidden="true"
+                            focusable="false"
+                        >
+                            <g class="brows">
+                                <line
+                                    class="brow brow-l"
+                                    x1="20"
+                                    y1="8"
+                                    x2="62"
+                                    y2="8"
+                                />
+                                <line
+                                    class="brow brow-r"
+                                    x1="120"
+                                    y1="12"
+                                    x2="78"
+                                    y2="12"
+                                />
+                            </g>
+                            <g class="eye">
+                                <circle
+                                    cx="44"
+                                    cy="38"
+                                    r="26"
+                                    fill="#fdfdff"
+                                    stroke="#14121b"
+                                    stroke-width="4.5"
+                                />
+                                <circle
+                                    class="pupil"
+                                    cx="50"
+                                    cy="43"
+                                    r="10.5"
+                                    fill="#14121b"
+                                />
+                                <circle
+                                    cx="41"
+                                    cy="32"
+                                    r="4"
+                                    fill="#ffffff"
+                                    opacity="0.9"
+                                />
+                                <path
+                                    class="happy"
+                                    d="M20 42 Q44 14 68 42"
+                                    fill="none"
+                                    stroke="#14121b"
+                                    stroke-width="7"
+                                    stroke-linecap="round"
+                                />
+                            </g>
+                            <g class="eye">
+                                <circle
+                                    cx="100"
+                                    cy="38"
+                                    r="22"
+                                    fill="#fdfdff"
+                                    stroke="#14121b"
+                                    stroke-width="4.5"
+                                />
+                                <circle
+                                    class="pupil"
+                                    cx="95"
+                                    cy="42"
+                                    r="9"
+                                    fill="#14121b"
+                                />
+                                <circle
+                                    cx="93"
+                                    cy="33"
+                                    r="3.4"
+                                    fill="#ffffff"
+                                    opacity="0.9"
+                                />
+                                <path
+                                    class="happy"
+                                    d="M80 42 Q100 18 120 42"
+                                    fill="none"
+                                    stroke="#14121b"
+                                    stroke-width="7"
+                                    stroke-linecap="round"
+                                />
+                            </g>
+                        </svg>
+                        <span class="p-sym" id="pSym">H</span>
+                        <span class="p-name" id="pName">Hydrogen</span>
+                    </div>
+                </aside>
+            </main>
+
+            <footer class="choices">
+                <p class="prompt" id="prompt">First subshell?</p>
+                <div class="options" id="options"></div>
+            </footer>
+        </div>
+
+        <p class="sr-only" id="live" aria-live="polite"></p>
+
+        <div class="pdf-overlay" id="pdfOverlay" hidden>
+            <div
+                class="pdf-card"
+                role="dialog"
+                aria-modal="true"
+                aria-labelledby="pdfTitle"
+            >
+                <div class="pdf-head">
+                    <h2 id="pdfTitle">Configurations</h2>
+                    <div class="pdf-actions">
+                        <a
+                            class="link-btn"
+                            id="pdfNewTab"
+                            href="ElectronConfigProj..pdf"
+                            target="_blank"
+                            rel="noopener"
+                            >New tab</a
+                        >
+                        <button class="pdf-close" id="pdfClose" type="button">
+                            Close
+                        </button>
+                    </div>
+                </div>
+                <iframe
+                    class="pdf-frame"
+                    id="pdfFrame"
+                    title="Electron configurations PDF"
+                    src="about:blank"
+                ></iframe>
+            </div>
+        </div>
+
+        <div class="overlay" id="overlay">
+            <div class="overlay-card">
+                <h1 id="overlayTitle">ConfigIt!</h1>
+                <p id="overlayText">
+                    Select from the four choices to configure each element! Be
+                    careful - if you mess up, you'll lose lives! (Click "Open
+                    Configurations" in the top-right to see my work for the
+                    project)<br /><br />To make this, I had to program a system
+                    that can automatically determine what the correct
+                    configuration for each element is! Furthermore, I had to
+                    spend like 20 minutes adding cute googly eyes to elements
+                    that follow your mouse and get mad when you take too long to
+                    configure electrons! Lol.
+                </p>
+                <button class="primary-btn" id="overlayBtn" type="button">
+                    Start
+                </button>
+            </div>
+        </div>
+
+        <script src="elements.js"></script>
+        <script src="config.js"></script>
+        <script src="game.js"></script>
+    </body>
+</html>
